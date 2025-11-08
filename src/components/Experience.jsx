@@ -1,3 +1,6 @@
+import { Briefcase } from 'lucide-react';
+import { motion } from 'framer-motion';
+
 export default function Experience() {
   const experiences = [
     {
@@ -33,27 +36,42 @@ export default function Experience() {
   ];
 
   return (
-    <section id="experience" className="py-20 bg-white">
+    <section id="experience" className="relative py-24 bg-slate-950">
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-cyan-400/60 to-transparent" />
+      </div>
+
       <div className="max-w-6xl mx-auto px-6 md:px-10">
-        <h2 className="text-3xl md:text-4xl font-bold text-slate-900">Experience</h2>
-        <p className="mt-2 text-slate-600">Selected roles and impact.</p>
+        <div className="flex items-center gap-3">
+          <Briefcase className="text-violet-400" />
+          <h2 className="text-3xl md:text-4xl font-bold">Experience</h2>
+        </div>
+        <p className="mt-2 text-slate-400">Selected roles and outcomes.</p>
 
         <div className="mt-10 grid gap-6">
-          {experiences.map((exp) => (
-            <div key={exp.role} className="rounded-xl border border-slate-200 p-6 hover:shadow-md transition">
-              <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-2">
+          {experiences.map((exp, idx) => (
+            <motion.div
+              key={exp.role}
+              initial={{ opacity: 0, y: 12 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ delay: idx * 0.05 }}
+              className="relative rounded-xl border border-white/10 bg-white/5 p-6 backdrop-blur overflow-hidden"
+            >
+              <div className="pointer-events-none absolute -inset-1 opacity-40 bg-[radial-gradient(60%_60%_at_10%_0%,rgba(139,92,246,0.25),transparent_70%)]" />
+              <div className="relative flex flex-col md:flex-row md:items-center md:justify-between gap-2">
                 <div>
-                  <h3 className="text-xl font-semibold text-slate-900">{exp.role}</h3>
-                  <p className="text-slate-600">{exp.company}</p>
+                  <h3 className="text-xl font-semibold text-white">{exp.role}</h3>
+                  <p className="text-slate-300">{exp.company}</p>
                 </div>
-                <p className="text-sm text-slate-500">{exp.period}</p>
+                <p className="text-sm text-slate-400">{exp.period}</p>
               </div>
-              <ul className="mt-4 list-disc list-inside space-y-2 text-slate-700">
+              <ul className="relative mt-4 space-y-2 text-slate-300">
                 {exp.bullets.map((b) => (
-                  <li key={b}>{b}</li>
+                  <li key={b} className="pl-4 before:content-['•'] before:text-cyan-300 before:mr-2">{b}</li>
                 ))}
               </ul>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>
